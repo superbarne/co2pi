@@ -1,5 +1,3 @@
-# Adafruit 128x32 Oled Bonnet
-
 import time
 import Adafruit_SSD1306
 from PIL import Image, ImageDraw, ImageFont
@@ -26,7 +24,7 @@ draw = ImageDraw.Draw(image)
 draw.rectangle((0,0,width,height), outline=0, fill=0)
 
 # Draw some text.
-font = ImageFont.load_default()
+font = ImageFont.truetype('./DejaVuSans-Bold.ttf', 10)
 text = time.strftime("%H:%M:%S")
 draw.text((0, 0), text, font=font, fill=255)
 
