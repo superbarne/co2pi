@@ -84,7 +84,7 @@ def getCo2Content():
             values[op] = val
         
             co2 = values.get(0x50, 'Unknown')
-            temp = round(temp, values.get(0x42, 'Unknown')/16.0-273.15,2) if 0x42 in values else 'Unknown'
+            temp = round(values.get(0x42, 'Unknown')/16.0-273.15,2) if 0x42 in values else 'Unknown'
             return co2, temp
 
 # Create the I2C interface.
