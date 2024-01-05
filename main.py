@@ -63,6 +63,7 @@ def hd(d):
     return " ".join("%02X" % e for e in d)
 
 def getCo2Content():
+    values = {}
     try:
         data = list(fp.read(8))
     except OSError as e:
@@ -83,7 +84,7 @@ def getCo2Content():
             values[op] = val
         
             co2 = values.get(0x50, 'Unknown')
-            temp = values.get(0x42, 'Unknown')/16.0-273.15 if 0x42 in values else 'Unknown'
+            temp = round(temp, values.get(0x42, 'Unknown')/16.0-273.15,2) if 0x42 in values else 'Unknown'
             return co2, temp
 
 # Create the I2C interface.
@@ -114,24 +115,29 @@ set_report = [0x00] + key
 set_report = bytearray(set_report)
 fcntl.ioctl(fp, HIDIOCSFEATURE_9, set_report)
 
-values = {}
+start_time = time.time()
 
 while True:
-    # Draw some text.
-    # font = ImageFont.load_default()
-    text = "IP: " + get_ip_address()
-    text += "\nSSID: " + get_wifi_network()
-    co2, temp = getCo2Content()
-    text += "\nCO2: " + str(co2) + " ppm" + " @ " + str(round(temp, 2)) + " C"
 
-    # Draw a black filled box to clear the image.
-    draw.rectangle((0, 0, width, height), outline=0, fill=0)
-    # Write two lines of text.
-    draw.text((0, 0), text, font=font, fill=255)
+    if time.time() - start_time < 300:
+        # Draw some text.
+        # font = ImageFont.load_default()
+        text = "IP: " + get_ip_address()
+        text += "\nSSID: " + get_wifi_network()
+        co2, temp = getCo2Content()
+        text += "\nCO2: " + str(co2) + " ppm" + " @ " + str(temp) + " C"
 
-    # Display image.
-    disp.image(image)
-    disp.show()
+        # Draw a black filled box to clear the image.
+        draw.rectangle((0, 0, width, height), outline=0, fill=0)
+        # Write two lines of text.
+        draw.text((0, 0), text, font=font, fill=255)
+
+        # Display image.
+        disp.image(image)
+        disp.show()
+    else:
+        # turn off display
+        disp.fill(0)
 
     # Wait for one second.
     time.sleep(1)
