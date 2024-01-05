@@ -47,12 +47,10 @@ image = Image.new("1", (width, height))
 # Get drawing object to draw on image.
 draw = ImageDraw.Draw(image)
 
+disp.fill(0)
+disp.show()
+
 while True:
-    # Clear display.
-    disp.fill(0)
-    disp.show()
-
-
     # Draw some text.
     font = ImageFont.load_default()
     text = "IP: " + get_ip_address()
