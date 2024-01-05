@@ -66,7 +66,11 @@ def hd(d):
     return " ".join("%02X" % e for e in d)
 
 def getCo2Content():
-    data = list(fp.read(8))
+    try:
+        data = list(fp.read(8))
+    except OSError as e:
+        print(f"OS error: {e}")
+        return 'Unknown', 'Unknown'
     decrypted = None
     if data[4] == 0x0d and (sum(data[:3]) & 0xff) == data[3]:
         decrypted = data
@@ -121,7 +125,7 @@ while True:
     text = "IP: " + get_ip_address()
     text += "\nSSID: " + get_wifi_network()
     co2, temp = getCo2Content()
-    text += "\nCO2: " + str(co2) + " ppm"
+    text += "\nCO2: " + str(co2) + " ppm" + " @ " + str(temp) + " C"
 
     # Draw a black filled box to clear the image.
     draw.rectangle((0, 0, width, height), outline=0, fill=0)
