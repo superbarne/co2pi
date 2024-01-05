@@ -118,6 +118,12 @@ fcntl.ioctl(fp, HIDIOCSFEATURE_9, set_report)
 start_time = time.time()
 
 while True:
+    co2, temp = getCo2Content()
+    script_time = time.time()
+
+    # write co2 and temp to a csv file for later analysis
+    with open('/home/barne/src/co2pi/co2.csv', 'a') as f:
+        f.write(str(script_time) + "," + str(co2) + "," + str(temp) + "\n")
 
     if time.time() - start_time < 300:
         # Draw some text.
@@ -125,7 +131,6 @@ while True:
         # text = "IP: " + get_ip_address()
 
         text = "SSID: " + get_wifi_network() + " " + str(int(300 - (time.time() - start_time))) + "s"
-        co2, temp = getCo2Content()
         text += "\nCO2: " + str(co2) + " ppm" + " @ " + str(temp) + " C"
 
         # Draw a black filled box to clear the image.
@@ -140,5 +145,6 @@ while True:
         # turn off display
         disp.fill(0)
 
-    # Wait for one second.
-    time.sleep(1)
+    # wait the remaining time to get a 1 second interval
+    if script_time - start_time < 1:
+        time.sleep(1 - (script_time - start_time))
