@@ -122,7 +122,11 @@ while True:
     if time.time() - start_time < 300:
         # Draw some text.
         # font = ImageFont.load_default()
-        text = "IP: " + get_ip_address()
+        # text = "IP: " + get_ip_address()
+
+        # display time left until display is turned off
+        text = str(int(300 - (time.time() - start_time))) + "s"
+
         text += "\nSSID: " + get_wifi_network()
         co2, temp = getCo2Content()
         text += "\nCO2: " + str(co2) + " ppm" + " @ " + str(temp) + " C"
