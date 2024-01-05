@@ -4,14 +4,34 @@ import adafruit_ssd1305
 import time
 from PIL import Image, ImageDraw, ImageFont
 import socket
+import netifaces
+import datetime
+
+current_time = datetime.datetime.now()
+print("Starting ", current_time)
 
 # Function to get the IP address
 def get_ip_address():
-    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s.connect(("8.8.8.8", 80))
-    ip_address = s.getsockname()[0]
-    s.close()
-    return ip_address
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.connect(("8.8.8.8", 80))
+        ip_address = s.getsockname()[0]
+        s.close()
+        return ip_address
+    except:
+        return ""
+
+# Get the currently connected Wi-Fi network
+def get_wifi_network():
+    interfaces = netifaces.interfaces()
+    for interface in interfaces:
+        if interface.startswith('wlan'):
+            addresses = netifaces.ifaddresses(interface)
+            if netifaces.AF_INET in addresses:
+                for address in addresses[netifaces.AF_INET]:
+                    if 'addr' in address:
+                        return address['addr']
+    return None
 
 # Create the I2C interface.
 i2c = busio.I2C(board.SCL, board.SDA)

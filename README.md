@@ -14,5 +14,5 @@ https://peps.python.org/pep-0008/
 ```/etc/rc.local```
 
 ``` bash
-/home/pi/src/co2pi/venv/bin/python /home/pi/src/co2pi/main.py &
+sudo bash -c '/home/barne/src/co2pi/venv/bin/python /home/barne/src/co2pi/main.py > /home/barne/src/co2pi/co2pi.log 2>&1' &
 ```
