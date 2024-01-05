@@ -130,8 +130,8 @@ while True:
         # font = ImageFont.load_default()
         # text = "IP: " + get_ip_address()
 
-        text = "SSID: " + get_wifi_network() + " " + str(int(300 - (time.time() - start_time))) + "s"
-        text += "\nCO2: " + str(co2) + " ppm" + " @ " + str(temp) + " C"
+        text = get_wifi_network() + " " + str(int(300 - (time.time() - start_time))) + "s"
+        text += "\n" + str(co2) + " ppm" + " @ " + str(temp) + " C"
 
         # Draw a black filled box to clear the image.
         draw.rectangle((0, 0, width, height), outline=0, fill=0)
