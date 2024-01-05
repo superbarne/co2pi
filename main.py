@@ -7,6 +7,7 @@ import socket
 import netifaces
 import datetime
 import sys, fcntl
+import subprocess
 
 current_time = datetime.datetime.now()
 print("Starting ", current_time)
@@ -22,17 +23,13 @@ def get_ip_address():
     except:
         return ""
 
-# Get the currently connected Wi-Fi network
+# Get the currently connected SSID of the Wi-Fi network
 def get_wifi_network():
-    interfaces = netifaces.interfaces()
-    for interface in interfaces:
-        if interface.startswith('wlan'):
-            addresses = netifaces.ifaddresses(interface)
-            if netifaces.AF_INET in addresses:
-                for address in addresses[netifaces.AF_INET]:
-                    if 'addr' in address:
-                        return address['addr']
-    return 'Unknown'
+    try:
+        output = subprocess.check_output(["iwgetid", "-r"]).decode("utf-8").strip()
+        return output
+    except subprocess.CalledProcessError:
+        return 'Unknown'
 
 # co2sensor
 
@@ -125,7 +122,7 @@ while True:
     text = "IP: " + get_ip_address()
     text += "\nSSID: " + get_wifi_network()
     co2, temp = getCo2Content()
-    text += "\nCO2: " + str(co2) + " ppm" + " @ " + str(temp) + " C"
+    text += "\nCO2: " + str(co2) + " ppm" + " @ " + str(round(temp, 2)) + " C"
 
     # Draw a black filled box to clear the image.
     draw.rectangle((0, 0, width, height), outline=0, fill=0)
