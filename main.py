@@ -104,11 +104,7 @@ disp.show()
 
 # init co2sensor
 key = [0xc4, 0xc6, 0xc0, 0x92, 0x40, 0x23, 0xdc, 0x96]
-if (len(sys.argv) != 2):
-    print("Please specifiy the device, mostly it is /dev/hidraw0")
-    exit(1)
-
-fp = open(sys.argv[1], "a+b",  0)
+fp = open("/dev/hidraw0", "a+b",  0)
 
 HIDIOCSFEATURE_9 = 0xC0094806
 set_report = [0x00] + key
