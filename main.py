@@ -58,6 +58,7 @@ while True:
     # Draw some text.
     font = ImageFont.load_default()
     text = "IP: " + get_ip_address()
+    text = "SSID: " + get_wifi_network()
     draw.text((0, 0), text, font=font, fill=255)
 
     # Display image.
