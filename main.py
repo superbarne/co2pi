@@ -52,13 +52,15 @@ while True:
     disp.fill(0)
     disp.show()
 
-    # Draw a black filled box to clear the image.
-    draw.rectangle((0, 0, width, height), outline=0, fill=0)
 
     # Draw some text.
     font = ImageFont.load_default()
     text = "IP: " + get_ip_address()
     text += "\nSSID: " + get_wifi_network()
+
+    # Draw a black filled box to clear the image.
+    draw.rectangle((0, 0, width, height), outline=0, fill=0)
+    # Write two lines of text.
     draw.text((0, 0), text, font=font, fill=255)
 
     # Display image.
