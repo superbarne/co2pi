@@ -62,8 +62,8 @@ def decrypt(key,  data):
 def hd(d):
     return " ".join("%02X" % e for e in d)
 
+values = {}
 def getCo2Content():
-    values = {}
     try:
         data = list(fp.read(8))
     except OSError as e:
@@ -93,7 +93,7 @@ i2c = busio.I2C(board.SCL, board.SDA)
 # Create the SSD1305 OLED class.
 disp = adafruit_ssd1305.SSD1305_I2C(128, 32, i2c)
 
-font = ImageFont.truetype('/home/barne/src/co2pi/CourierPrime-Regular.ttf', 8)
+font = ImageFont.truetype('/home/barne/src/co2pi/CourierPrime-Regular.ttf', 9)
 
 # Create blank image for drawing.
 width = disp.width
