@@ -115,7 +115,8 @@ values = {}
 
 while True:
     # Draw some text.
-    font = ImageFont.load_default()
+    font = ImageFont.truetype('CourierPrime-Regular.ttf', 8)
+    # font = ImageFont.load_default()
     text = "IP: " + get_ip_address()
     text += "\nSSID: " + get_wifi_network()
     co2, temp = getCo2Content()
